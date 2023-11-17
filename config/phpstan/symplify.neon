@@ -1,0 +1,9 @@
+rules:
+    - Symplify\PHPStanRules\Rules\CheckClassNamespaceFollowPsr4Rule
+    - Symplify\PHPStanRules\Rules\Complexity\ForbiddenArrayMethodCallRule
+    - Symplify\PHPStanRules\Rules\ForbiddenExtendOfNonAbstractClassRule
+    - Symplify\PHPStanRules\Rules\ForbiddenParamTypeRemovalRule
+    - Symplify\PHPStanRules\Rules\NoArrayAccessOnObjectRule
+    - Symplify\PHPStanRules\Rules\NoDynamicNameRule
+    - Symplify\PHPStanRules\Rules\NoIssetOnObjectRule
+    - Symplify\PHPStanRules\Rules\PreventParentMethodVisibilityOverrideRule

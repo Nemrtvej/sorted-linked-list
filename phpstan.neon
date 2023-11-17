@@ -1,0 +1,32 @@
+includes:
+	- config/phpstan/base.neon
+	- config/phpstan/cognitive-complexity.neon
+	- config/phpstan/disallowed-calls.neon
+	- config/phpstan/ergebnis-rules.neon
+	- config/phpstan/shipmonk-rules.neon
+	- config/phpstan/symplify.neon
+	- config/phpstan/type-coverage.neon
+
+parameters:
+
+	tmpDir: var/phpstan
+	parallel:
+		processTimeout: 300.0
+
+	paths:
+		- src
+
+	shipmonkRules:
+		uselessPrivatePropertyDefaultValue:
+			enabled: true
+		classSuffixNaming:
+			superclassToSuffixMapping:
+				PHPUnit\Framework\TestCase: Test
+
+
+	disallowedFunctionCalls:
+		-
+			function: 'dump()'
+
+rules:
+	- Symplify\PHPStanRules\Symfony\Rules\RequireInvokableControllerRule

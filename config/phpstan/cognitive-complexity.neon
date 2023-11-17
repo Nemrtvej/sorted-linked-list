@@ -1,0 +1,4 @@
+parameters:
+    cognitive_complexity:
+        class: 50
+        function: 7

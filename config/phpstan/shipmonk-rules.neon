@@ -1,0 +1,16 @@
+parameters:
+    shipmonkRules:
+        forbidCustomFunctions:
+            enabled: false # Using spaze/phpstan-disallowed-calls instead.
+        forbidNullInBinaryOperations:
+            blacklist: [
+                '**', '!=', '==', '+', 'and', 'or', '&&', '||', '%', '-', '/', '*', # checked by phpstan-strict-rules
+                '>', '>=', '<', '<=', '<=>', # checked by AllowComparingOnlyComparableTypesRule
+                '===', '!==', '??' # valid with null involved
+            ]
+        forbidCheckedExceptionInYieldingMethod:
+            enabled: false
+        forbidCheckedExceptionInCallable:
+            enabled: false
+        allowNamedArgumentOnlyInAttributes:
+            enabled: false # https://github.com/shipmonk-rnd/phpstan-rules/pull/136

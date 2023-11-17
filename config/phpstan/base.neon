@@ -1,0 +1,11 @@
+includes:
+    - %rootDir%/../../phpstan/phpstan/conf/bleedingEdge.neon
+
+parameters:
+    level: max
+
+    reportUnmatchedIgnoredErrors: true
+    checkMissingCallableSignature: true
+    checkBenevolentUnionTypes: true
+    checkUninitializedProperties: true
+    checkImplicitMixed: true
