@@ -11,6 +11,8 @@ composer-install:
 
 reset: rebuild-containers composer-install
 
+start:
+	docker compose up -d $(docker-image)
 
 stan:
 	docker compose exec $(docker-image) vendor/bin/phpstan analyse --ansi
@@ -24,6 +26,9 @@ fix:
 
 test:
 	docker-compose exec $(docker-image) vendor/bin/phpunit
+
+security:
+	docker-compose exec $(docker-image) composer require --dev roave/security-advisories:dev-latest
 
 check: fix stan test
 
