@@ -2,6 +2,7 @@ version: '3.5'
 
 services:
     php:
+        image: nemrtvej/sorted-linked-list
         build:
             dockerfile: docker/php/Dockerfile
             context: .

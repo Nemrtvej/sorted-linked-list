@@ -1,28 +1,24 @@
-FROM php:8.2-fpm-bullseye AS extensions
-
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+FROM php:8.2-alpine3.18 AS extensions
 
 # Xdebug
-RUN pecl channel-update pecl.php.net \
-    && pecl -q install xdebug
-
-RUN docker-php-ext-enable xdebug
-
-
-FROM php:8.2-fpm-bullseye
-
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-RUN set -x && (userdel -r www-data || true)
+RUN apk add --no-cache $PHPIZE_DEPS linux-headers \
+    && pecl channel-update pecl.php.net \
+    && pecl -q install xdebug \
+    && docker-php-ext-enable xdebug
 
 
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
+FROM php:8.2-alpine3.18
+
+RUN apk add --no-cache \
+    	bash \
 		dumb-init \
     	git \
     	unzip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -fr /var/cache/apt/*
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN set -x && deluser www-data
 
 COPY --from=extensions /usr/local/lib/php/extensions /usr/local/lib/php/extensions
 COPY --from=extensions /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d

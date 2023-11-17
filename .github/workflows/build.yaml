@@ -1,0 +1,59 @@
+name: Code Quality
+run-name: Run code quality jobs
+on: [push]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v3
+            - name: Build image
+              run: |
+                export PGID=$(id -g)
+                export PUID=$(id -u)
+                docker compose build php
+            - name: Store image locally
+              run: docker save nemrtvej/sorted-linked-list -o storage/php.tar
+            - name: start the container & load dependencies
+              run: |
+                export PGID=$(id -g)
+                export PUID=$(id -u)
+                make start composer-install
+                tar czf storage/vendors.tar.gz vendor/*
+            - name: Upload image artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: docker-image
+                path: storage/php.tar
+                retention-days: 1
+            - name: Upload vendors
+              uses: actions/upload-artifact@v3
+              with:
+                name: vendors
+                path: storage/vendors.tar.gz
+                retention-days: 1
+
+    phpstan:
+        needs: build
+        uses: ./.github/workflows/common-jobs.yaml
+        with:
+            command: make stan
+
+    phpcs:
+        needs: build
+        uses: ./.github/workflows/common-jobs.yaml
+        with:
+            command: make cs
+
+    security:
+        needs: build
+        uses: ./.github/workflows/common-jobs.yaml
+        with:
+            command: make security
+
+    test:
+        needs: build
+        uses: ./.github/workflows/common-jobs.yaml
+        with:
+            command: make test
