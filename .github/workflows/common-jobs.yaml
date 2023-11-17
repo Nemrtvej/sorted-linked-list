@@ -1,0 +1,37 @@
+name: Common CI job
+
+on:
+  workflow_call:
+    inputs:
+      command:
+        required: true
+        type: string
+
+jobs:
+    run-task:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v3
+            - name: Download the docker image
+              uses: actions/download-artifact@v3
+              with:
+                name: docker-image
+                path: storage/
+            - name: Download the vendors
+              uses: actions/download-artifact@v3
+              with:
+                name: vendors
+                path: storage/
+            - name: load the docker image and vendors
+              run: |
+                docker load -i storage/php.tar
+            - name: start the container
+              run: |
+                export PGID=$(id -g)
+                export PUID=$(id -u)
+                make start
+                mkdir vendor
+                tar xzf storage/vendors.tar.gz
+            - name: run phpstan
+              run: ${{ inputs.command }}

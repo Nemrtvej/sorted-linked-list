@@ -25,10 +25,10 @@ fix:
 
 
 test:
-	docker-compose exec $(docker-image) vendor/bin/phpunit
+	docker compose exec $(docker-image) vendor/bin/phpunit
 
 security:
-	docker-compose exec $(docker-image) composer require --dev roave/security-advisories:dev-latest
+	docker compose exec $(docker-image) composer require --dev roave/security-advisories:dev-latest
 
 check: fix stan test
 
