@@ -11,7 +11,7 @@ final class CountTest extends TestCase
 {
 	public function testSingleItemProducesLength1(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 		$list->add(1);
 
 		self::assertSame(1, $list->count());
@@ -19,7 +19,7 @@ final class CountTest extends TestCase
 
 	public function testTwoItemsProducesLength2(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 		$list->add(2);
 		$list->add(1);
 
@@ -28,7 +28,7 @@ final class CountTest extends TestCase
 
 	public function test6ItemsProduceLength6(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 		$list->add(15);
 		$list->add(4);
 		$list->add(42);
@@ -41,7 +41,7 @@ final class CountTest extends TestCase
 
 	public function testEmptyListReturnLength0(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 
 		self::assertSame(0, $list->count());
 	}

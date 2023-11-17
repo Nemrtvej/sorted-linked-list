@@ -11,7 +11,7 @@ final class AddTest extends TestCase
 {
 	public function testItAddsToEmptyList(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 		$list->add(1);
 
 		self::assertSame(1, $list->getFirst());
@@ -19,7 +19,7 @@ final class AddTest extends TestCase
 
 	public function testItAddsSecondValueToBeginningIfItIsLower(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 		$list->add(2);
 		$list->add(1);
 
@@ -28,7 +28,7 @@ final class AddTest extends TestCase
 
 	public function testItAddsSecondValueToEndIfItIsHigher(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 		$list->add(1);
 		$list->add(2);
 
@@ -37,7 +37,7 @@ final class AddTest extends TestCase
 
 	public function testItKeepsValuesSorted(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 		$list->add(15);
 		$list->add(4);
 		$list->add(42);
@@ -50,7 +50,7 @@ final class AddTest extends TestCase
 
 	public function testEmptyCollectionHasNoValues(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 
 		self::assertSame([], iterator_to_array($list->toValues(), false));
 	}

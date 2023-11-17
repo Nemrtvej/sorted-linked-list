@@ -11,14 +11,14 @@ final class FirstTest extends TestCase
 {
 	public function testItWontFailOnEmptyList(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 
 		self::assertNull($list->getFirst());
 	}
 
 	public function testItReturnsSmallesValue(): void
 	{
-		$list = new SortedLinkedList();
+		$list = SortedLinkedList::int();
 		$list->add(2);
 		$list->add(1);
 

@@ -11,7 +11,7 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * @template T of int|string
+ * @template T
  * @implements IteratorAggregate<T>
  */
 final class SortedLinkedList implements IteratorAggregate, Countable
@@ -27,34 +27,45 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	private Closure $comparator;
 
 	/**
-	 * @param list<T>|null $values
+	 * @param list<int>|null $values
+	 * @return self<int>
 	 */
-	public function __construct(?array $values = null)
+	public static function int(?array $values = null): self
+	{
+		$comparator = function(int $first, int $second): int {
+			return $first <=> $second;
+		};
+
+		/** @var SortedLinkedList<int> $result */
+		$result = new self($values, $comparator);
+		return $result;
+	}
+
+	/**
+	 *
+	 * @param list<string>|null $values
+	 * @return self<string>
+	 */
+	public static function string(?array $values = null): self
+	{
+		$comparator = function(string $first, string $second): int {
+			return strcmp($first, $second);
+		};
+
+		/** @var SortedLinkedList<string> $result */
+		$result = new self($values, $comparator);
+		return $result;
+	}
+
+	/**
+	 * @param list<T>|null $values
+	 * @param Closure(T, T): int $comparator
+	 */
+	private function __construct(?array $values = null, Closure $comparator)
 	{
 		$values ??= [];
 
-		/*
-		 * @param T $first
-		 * @param T $second
-		 * @return int
-		 */
-		$this->comparator = static function (mixed $first, mixed $second): int {
-			if (\is_int($first) && \is_int($second)) {
-				return $first <=> $second;
-			}
-
-			if (\is_string($first) && \is_string($second)) {
-				return strcmp($first, $second);
-			}
-
-			throw new \LogicException(
-				sprintf(
-					'Comparison between %s and %s is not defined',
-					\gettype($first),
-					\gettype($second),
-				),
-			);
-		};
+		$this->comparator = $comparator;
 
 		foreach ($values as $value) {
 			$this->add($value);
