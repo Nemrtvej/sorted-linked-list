@@ -5,5 +5,12 @@ services:
         build:
             dockerfile: docker/php/Dockerfile
             context: .
+            args:
+                PUID: ${PUID}
+                PGID: ${PGID}
         volumes:
-            - ./src:/app/
+            - ./:/app/
+        user: www-data
+        environment:
+            PGID: ${PUID}
+            PUID: ${PUID}
