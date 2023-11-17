@@ -8,7 +8,7 @@ use Nemrtvej\SortedLinkedList\LinkedListIterator;
 use Nemrtvej\SortedLinkedList\Node;
 use PHPUnit\Framework\TestCase;
 
-class KeyTest extends TestCase
+final class KeyTest extends TestCase
 {
 	public function testItWontFailOnEmptyCollection(): void
 	{

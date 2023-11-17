@@ -8,7 +8,7 @@ use Nemrtvej\SortedLinkedList\LinkedListIterator;
 use Nemrtvej\SortedLinkedList\Node;
 use PHPUnit\Framework\TestCase;
 
-class ValidTest extends TestCase
+final class ValidTest extends TestCase
 {
 	public function testItWontFailOnEmptyCollection(): void
 	{
@@ -23,10 +23,10 @@ class ValidTest extends TestCase
 
 		$iterator = new LinkedListIterator($firstNode);
 
-		self::assertSame(true, $iterator->valid());
+		self::assertTrue($iterator->valid());
 		$iterator->next();
-		self::assertSame(true, $iterator->valid());
+		self::assertTrue($iterator->valid());
 		$iterator->next();
-		self::assertSame(false, $iterator->valid());
+		self::assertFalse($iterator->valid());
 	}
 }
