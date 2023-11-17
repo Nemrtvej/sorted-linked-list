@@ -2,8 +2,6 @@ FROM php:8.2-fpm-bullseye
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-WORKDIR /app
-
 RUN set -x && (userdel -r www-data || true)
 
 
@@ -17,7 +15,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY /docker/php/utils/* /docker/
 
-RUN chmod +x /docker/entrypoint.sh
+RUN chmod +x /docker/entrypoint.sh && mkdir /app
+
+WORKDIR /app
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--", "/docker/entrypoint.sh"]
 CMD ["tail", "-f", "/dev/null"]
