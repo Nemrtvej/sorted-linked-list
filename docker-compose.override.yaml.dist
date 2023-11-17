@@ -1,0 +1,7 @@
+version: '3.5'
+
+services:
+    php:
+        environment:
+            PGID: 1000
+            PUID: 1000

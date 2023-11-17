@@ -1,0 +1,9 @@
+/.idea
+
+
+docker-compose.override.yaml
+
+vendor
+composer.lock
+
+Makefile.local
