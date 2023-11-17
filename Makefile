@@ -1,3 +1,4 @@
+docker-image = php
 
 rebuild-containers:
 	docker compose rm -v --stop --force
@@ -5,14 +6,25 @@ rebuild-containers:
 
 
 composer-install:
-	docker compose exec php composer install
+	docker compose exec $(docker-image) composer install
 
 
 reset: rebuild-containers composer-install
 
 
 stan:
-	docker compose exec php vendor/bin/phpstan analyse --ansi
+	docker compose exec $(docker-image) vendor/bin/phpstan analyse --ansi
 
+cs:
+	docker compose exec $(docker-image) vendor/bin/ecs check --ansi
+
+fix:
+	docker compose exec $(docker-image) vendor/bin/ecs check --fix
+
+
+test:
+	docker-compose exec $(docker-image) vendor/bin/phpunit
+
+check: fix stan test
 
 -include Makefile.local
