@@ -2,7 +2,7 @@
     "name": "nemrtvej/sorted-linked-list",
     "description": "PHP Library with sorted linked list",
     "type": "library",
-        "require": {
+    "require": {
         "php": "^8.2"
     },
     "require-dev": {
