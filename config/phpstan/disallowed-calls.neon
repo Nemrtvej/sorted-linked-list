@@ -1,0 +1,109 @@
+includes:
+    - %rootDir%/../../spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - %rootDir%/../../spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+    - %rootDir%/../../spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+    - %rootDir%/../../spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+
+parameters:
+    disallowedClasses:
+        -
+            class: 'DateTime'
+            message: 'use DateTimeImmutable instead'
+        -
+            class: 'AppendIterator'
+            message: 'avoid using AppendIterator until this bug is solved: https://bugs.php.net/bug.php?id=72692'
+
+    disallowedMethodCalls:
+        -
+            method: 'Psr\Http\Message\StreamInterface::getContents()'
+            message: "use __toString() instead, getContents doesn't rewind the stream"
+
+    disallowedConstants:
+        -
+            constant: 'DATE_ATOM'
+            message: 'use DateTimeImmutable::ATOM instead'
+        -
+            constant: 'DATE_ISO8601'
+            message: 'use DateTimeImmutable::ATOM or DateTimeImmutable::ISO8601_EXPANDED instead'
+        -
+            class: 'DateTimeInterface'
+            constant: 'ISO8601'
+            message: 'use DateTimeImmutable::ATOM or DateTimeImmutable::ISO8601_EXPANDED instead'
+        -
+            constant: 'DATE_COOKIE'
+            message: 'use DateTimeImmutable::COOKIE instead'
+        -
+            constant: 'DATE_RFC822'
+            message: 'use DateTimeImmutable::RFC822 instead'
+        -
+            constant: 'DATE_RFC850'
+            message: 'use DateTimeImmutable::RFC850 instead'
+        -
+            constant: 'DATE_RFC1036'
+            message: 'use DateTimeImmutable::RFC1036 instead'
+        -
+            constant: 'DATE_RFC1123'
+            message: 'use DateTimeImmutable::RFC1123 instead'
+        -
+            constant: 'DATE_RFC7231'
+            message: 'use DateTimeImmutable::RFC7231 instead'
+        -
+            constant: 'DATE_RFC2822'
+            message: 'use DateTimeImmutable::RFC2822 instead'
+        -
+            constant: 'DATE_RFC3339'
+            message: 'use DateTimeImmutable::RFC3339 instead'
+        -
+            constant: 'DATE_RFC3339_EXTENDED'
+            message: 'use DateTimeImmutable::RFC3339_EXTENDED instead'
+        -
+            constant: 'DATE_RSS'
+            message: 'use DateTimeImmutable::RSS instead'
+        -
+            constant: 'DATE_W3C'
+            message: 'use DateTimeImmutable::W3C instead'
+
+    disallowedFunctionCalls:
+        -
+            function: 'json_encode()'
+            message: 'use \Nette\Utils\Json::encode() instead for better error handling'
+        -
+            function: 'json_decode()'
+            message: 'use \Nette\Utils\Json::decode() instead for better error handling'
+        -
+            function: 'preg_match()'
+            message: 'use \Nette\Utils\Strings::match() instead for better error handling, note that the arguments are swapped'
+        -
+            function: 'preg_match_all()'
+            message: 'use \Nette\Utils\Strings::matchAll() instead for better error handling, note that the arguments are swapped'
+        -
+            function: 'preg_replace()'
+            message: 'use \Nette\Utils\Strings::replace() instead for better error handling, note that the arguments are swapped'
+        -
+            function: 'preg_replace_callback()'
+            message: 'use \Nette\Utils\Strings::replace() instead for better error handling, note that the arguments are swapped'
+        -
+            function: 'preg_replace_callback_array()'
+            message: 'use \Nette\Utils\Strings::replace() instead for better error handling, note that the arguments are swapped'
+        -
+            function: 'preg_split()'
+            message: 'use \Nette\Utils\Strings::split() instead for better error handling, note that the arguments are swapped'
+
+    disallowedStaticCalls:
+        -
+            function: 'Nette\Utils\Strings::toAscii()'
+            message: 'use Symfony\Component\String\UnicodeString::ascii() instead'
+        -
+            function: 'Nette\Utils\Strings::webalize()'
+            message: 'use Symfony\Component\String\Slugger\AsciiSlugger::slug() instead'
+
+    disallowedSuperglobals:
+        -
+            superglobal:
+                - '$_GET'
+                - '$_POST'
+                - '$_FILES'
+                - '$_REQUEST'
+                - '$_SESSION'
+                - '$_COOKIE'
+            message: 'use the Request methods instead'

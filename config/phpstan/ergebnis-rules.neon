@@ -1,0 +1,18 @@
+parameters:
+    ergebnis:
+        final:
+            enabled: false
+        noConstructorParameterWithDefaultValue:
+            enabled: false
+        noExtends:
+            enabled: false
+        noNullableReturnTypeDeclaration:
+            enabled: false
+        noParameterWithContainerTypeDeclaration:
+            enabled: false
+        noParameterWithNullableTypeDeclaration:
+            enabled: false
+        noParameterWithNullDefaultValue:
+            enabled: false
+        noSwitch:
+            enabled: false
