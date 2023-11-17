@@ -14,5 +14,11 @@ reset: rebuild-containers composer-install
 stan:
 	docker compose exec php vendor/bin/phpstan analyse --ansi
 
+cs:
+	docker compose exec php vendor/bin/ecs check --ansi
+
+fix:
+	docker compose exec php vendor/bin/ecs check --fix
+
 
 -include Makefile.local
