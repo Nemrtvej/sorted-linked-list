@@ -8,6 +8,7 @@ use Closure;
 use Countable;
 use Generator;
 use IteratorAggregate;
+use LogicException;
 use Traversable;
 
 /**
@@ -32,10 +33,8 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	 */
 	public static function int(?array $values = null): self
 	{
-		$comparator = static fn (int $first, int $second): int => $first <=> $second;
-
 		/** @var SortedLinkedList<int> $result */
-		$result = new self($values ?? [], $comparator);
+		$result = new self($values ?? [], CommonComparators::intAsc());
 
 		return $result;
 	}
@@ -46,10 +45,8 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	 */
 	public static function string(?array $values = null): self
 	{
-		$comparator = static fn (string $first, string $second): int => strcmp($first, $second);
-
 		/** @var SortedLinkedList<string> $result */
-		$result = new self($values ?? [], $comparator);
+		$result = new self($values ?? [], CommonComparators::stringAsc());
 
 		return $result;
 	}
@@ -186,19 +183,6 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	}
 
 	/**
-	 * @return Generator<T>
-	 */
-	private function toValues(): Generator
-	{
-		$currentNode = $this->head;
-
-		while ($currentNode !== null) {
-			yield $currentNode->value;
-			$currentNode = $currentNode->getNext();
-		}
-	}
-
-	/**
 	 * @param non-negative-int $index
 	 */
 	public function removeKey(int $index): void
@@ -220,6 +204,34 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 			$previousNode = $currentNode;
 			$currentNode = $currentNode->getNext();
 			++$currentIndex;
+		}
+	}
+
+	/**
+	 * Change the comparator that is internally used for sorting values.
+	 * @see \Nemrtvej\SortedLinkedList\CommonComparators or write your own :)
+	 *
+	 * @param Closure(T, T): int $comparator
+	 */
+	public function setComparator(Closure $comparator): void
+	{
+		if ($this->head !== null) {
+			throw new LogicException('Comparator can be changed only if the list is empty.');
+		}
+
+		$this->comparator = $comparator;
+	}
+
+	/**
+	 * @return Generator<T>
+	 */
+	private function toValues(): Generator
+	{
+		$currentNode = $this->head;
+
+		while ($currentNode !== null) {
+			yield $currentNode->value;
+			$currentNode = $currentNode->getNext();
 		}
 	}
 }
