@@ -183,4 +183,29 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 			$currentNode = $currentNode->getNext();
 		}
 	}
+
+	/**
+	 * @param non-negative-int $index
+	 */
+	public function removeKey(int $index): void
+	{
+		$previousNode = null;
+		$currentNode = $this->head;
+		$currentIndex = 0;
+
+		while ($currentNode !== null) {
+			if ($currentIndex === $index) {
+				if ($previousNode === null) {
+					$this->head = $currentNode->getNext();
+
+					return;
+				}
+				$previousNode->setNext($currentNode->getNext());
+			}
+
+			$previousNode = $currentNode;
+			$currentNode = $currentNode->getNext();
+			++$currentIndex;
+		}
+	}
 }
