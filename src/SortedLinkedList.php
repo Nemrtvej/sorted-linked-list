@@ -222,6 +222,11 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 		$this->comparator = $comparator;
 	}
 
+	public function clear(): void
+	{
+		$this->head = null;
+	}
+
 	/**
 	 * @return Generator<T>
 	 */
