@@ -12,6 +12,3 @@ services:
         volumes:
             - ./:/app/
         user: www-data
-        environment:
-            PGID: ${PUID}
-            PUID: ${PUID}
