@@ -16,7 +16,7 @@ final class ContainsTest extends TestCase
 		self::assertFalse($list->contains(42));
 	}
 
-	public function testItResolvesExistingValue(): void
+	public function testItResolvesExistingInteger(): void
 	{
 		$list = SortedLinkedList::int();
 		$list->add(2);
@@ -32,5 +32,14 @@ final class ContainsTest extends TestCase
 		$list->add(1);
 
 		self::assertFalse($list->contains(3));
+	}
+
+	public function testItResolvesExistingString(): void
+	{
+		$list = SortedLinkedList::string();
+		$list->add('c');
+		$list->add('y');
+
+		self::assertTrue($list->contains('y'));
 	}
 }

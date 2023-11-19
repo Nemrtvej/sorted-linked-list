@@ -54,4 +54,11 @@ final class AddTest extends TestCase
 
 		self::assertSame([], $list->toArray());
 	}
+
+	public function testItAddsStringsToo(): void
+	{
+		$list = SortedLinkedList::string(['a', 'z']);
+		$list->add('c');
+		self::assertSame(['a', 'c', 'z'], $list->toArray());
+	}
 }

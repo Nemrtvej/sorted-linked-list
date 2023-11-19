@@ -116,4 +116,35 @@ final class RemoveElementTest extends TestCase
 
 		return $list;
 	}
+
+	public function testItTransformsPizzaToApiLikeAProperDeveloper(): void
+	{
+		$list = SortedLinkedList::string();
+		$riggedComparator = static function (string $first, string $last): int {
+			/*
+			 * Rig the comparator in a way that the result is ordered in a way that "api" is spelled instead of "aip".
+			 */
+			if ($first === 'i') {
+				return 1;
+			}
+			if ($last === 'i') {
+				return -1;
+			}
+
+			return strcmp($first, $last);
+		};
+
+		$list->setComparator($riggedComparator);
+
+		$list->add('p');
+		$list->add('i');
+		$list->add('z');
+		$list->add('z');
+		$list->add('a');
+
+		$list->removeElement('z');
+
+		self::assertSame(['a', 'p', 'i'], $list->toArray()); // Hoooray! :)
+		self::assertSame(3, $list->count());
+	}
 }

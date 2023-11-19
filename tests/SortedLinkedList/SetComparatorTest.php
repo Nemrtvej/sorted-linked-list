@@ -50,4 +50,18 @@ final class SetComparatorTest extends TestCase
 		$list->add(2);
 		self::assertSame([4, 2], $list->toArray());
 	}
+
+	public function testItAllowsToChangeComparatorAfterListWasClearForStringListToo(): void
+	{
+		$list = SortedLinkedList::string();
+
+		$list->add('a');
+		$list->removeKey(0);
+
+		$list->setComparator(CommonComparators::stringDesc());
+
+		$list->add('z');
+		$list->add('x');
+		self::assertSame(['z', 'x'], $list->toArray());
+	}
 }

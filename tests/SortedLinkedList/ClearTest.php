@@ -9,11 +9,22 @@ use PHPUnit\Framework\TestCase;
 
 final class ClearTest extends TestCase
 {
-	public function testClearSomeValues(): void
+	public function testClearSomeIntegers(): void
 	{
 		$list = SortedLinkedList::int();
 		$list->add(1);
 		$list->add(2);
+		$list->clear();
+
+		self::assertSame(0, $list->count());
+		self::assertSame([], $list->toArray());
+	}
+
+	public function testClearSomeStrings(): void
+	{
+		$list = SortedLinkedList::string();
+		$list->add('a');
+		$list->add('b');
 		$list->clear();
 
 		self::assertSame(0, $list->count());

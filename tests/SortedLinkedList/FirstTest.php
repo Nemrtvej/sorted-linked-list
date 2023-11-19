@@ -24,4 +24,12 @@ final class FirstTest extends TestCase
 
 		self::assertSame(1, $list->getFirst());
 	}
+
+	public function testItReturnsStringToo(): void
+	{
+		$list = SortedLinkedList::string(['p', 'i', 'z', 'z']);
+		$list->add('a');
+
+		self::assertSame('a', $list->getFirst());
+	}
 }

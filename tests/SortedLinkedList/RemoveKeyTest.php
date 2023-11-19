@@ -63,4 +63,12 @@ final class RemoveKeyTest extends TestCase
 
 		return $list;
 	}
+
+	public function testItRemovesKeysOnStringListsToo(): void
+	{
+		$list = SortedLinkedList::string(['a', 'b', 'c']);
+		$list->removeKey(1);
+		self::assertSame(['a', 'c'], $list->toArray());
+		self::assertSame(2, $list->count());
+	}
 }

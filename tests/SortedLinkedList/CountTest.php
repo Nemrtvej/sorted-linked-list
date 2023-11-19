@@ -45,4 +45,16 @@ final class CountTest extends TestCase
 
 		self::assertSame(0, $list->count());
 	}
+
+	public function testItCountsStringToo(): void
+	{
+		$list = SortedLinkedList::string();
+		$list->add('p');
+		$list->add('i');
+		$list->add('z');
+		$list->add('z');
+		$list->add('a');
+
+		self::assertSame(5, $list->count());
+	}
 }
