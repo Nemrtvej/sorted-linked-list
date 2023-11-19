@@ -45,13 +45,13 @@ final class AddTest extends TestCase
 		$list->add(23);
 		$list->add(16);
 
-		self::assertSame([4, 8, 15, 16, 23, 42], iterator_to_array($list->toValues(), false));
+		self::assertSame([4, 8, 15, 16, 23, 42], $list->toArray());
 	}
 
 	public function testEmptyCollectionHasNoValues(): void
 	{
 		$list = SortedLinkedList::int();
 
-		self::assertSame([], iterator_to_array($list->toValues(), false));
+		self::assertSame([], $list->toArray());
 	}
 }

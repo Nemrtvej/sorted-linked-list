@@ -32,39 +32,34 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	 */
 	public static function int(?array $values = null): self
 	{
-		$comparator = function(int $first, int $second): int {
-			return $first <=> $second;
-		};
+		$comparator = static fn (int $first, int $second): int => $first <=> $second;
 
 		/** @var SortedLinkedList<int> $result */
-		$result = new self($values, $comparator);
+		$result = new self($values ?? [], $comparator);
+
 		return $result;
 	}
 
 	/**
-	 *
 	 * @param list<string>|null $values
 	 * @return self<string>
 	 */
 	public static function string(?array $values = null): self
 	{
-		$comparator = function(string $first, string $second): int {
-			return strcmp($first, $second);
-		};
+		$comparator = static fn (string $first, string $second): int => strcmp($first, $second);
 
 		/** @var SortedLinkedList<string> $result */
-		$result = new self($values, $comparator);
+		$result = new self($values ?? [], $comparator);
+
 		return $result;
 	}
 
 	/**
-	 * @param list<T>|null $values
+	 * @param list<T> $values
 	 * @param Closure(T, T): int $comparator
 	 */
-	private function __construct(?array $values = null, Closure $comparator)
+	private function __construct(array $values, Closure $comparator)
 	{
-		$values ??= [];
-
 		$this->comparator = $comparator;
 
 		foreach ($values as $value) {
@@ -136,9 +131,50 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	}
 
 	/**
+	 * Easy shorthand for getting list of values as an array.
+	 *
+	 * @return list<T>
+	 */
+	public function toArray(): array
+	{
+		return iterator_to_array($this->toValues(), preserve_keys: false);
+	}
+
+	/**
+	 * @param T $value
+	 */
+	public function removeElement(mixed $value): void
+	{
+		if ($this->head === null) {
+			return;
+		}
+
+		$previousNode = null;
+		$currentNode = $this->head;
+
+		while ($currentNode !== null) {
+			\assert($previousNode?->value === null || ($this->comparator)($previousNode->value, $value) !== 0);
+
+			if (($this->comparator)($currentNode->value, $value) === 0) {
+				if ($previousNode === null) {
+					$this->head = $currentNode->getNext();
+					$currentNode = $currentNode->getNext();
+					continue;
+				}
+
+				$previousNode->setNext($currentNode->getNext());
+				$currentNode = $currentNode->getNext();
+				continue;
+			}
+			$previousNode = $currentNode;
+			$currentNode = $currentNode->getNext();
+		}
+	}
+
+	/**
 	 * @return Generator<T>
 	 */
-	public function toValues(): Generator
+	private function toValues(): Generator
 	{
 		$currentNode = $this->head;
 
