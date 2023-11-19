@@ -30,6 +30,10 @@ test:
 security:
 	docker compose exec $(docker-image) composer require --dev roave/security-advisories:dev-latest
 
+hadolint:
+	docker run --rm -i hadolint/hadolint:v2.12.0-alpine < docker/php/Dockerfile
+
+# Hadolint is intentionally omitted. No need to run it locally every time during development...
 check: fix stan test
 
 -include Makefile.local

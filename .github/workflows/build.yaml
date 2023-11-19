@@ -57,3 +57,11 @@ jobs:
         uses: ./.github/workflows/common-jobs.yaml
         with:
             command: make test
+
+    hadolint:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v3
+            -   uses: hadolint/hadolint-action@v3.1.0
+                with:
+                    dockerfile: docker/php/Dockerfile

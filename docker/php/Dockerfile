@@ -1,7 +1,10 @@
 FROM php:8.2-alpine3.18 AS extensions
 
 # Xdebug
-RUN apk add --no-cache $PHPIZE_DEPS linux-headers \
+# The PHPIZE_DEPS needs to be globbed and word splitted, hence the SC2086 ignore.
+# Sadly the PHPIZE_DEPS do not contain package versions so hadolint is unhappy but there is not much I can do about this. => DL3018 ignore.
+# hadolint ignore=SC2086,DL3018
+RUN apk add --no-cache $PHPIZE_DEPS linux-headers=6.3-r0 \
     && pecl channel-update pecl.php.net \
     && pecl -q install xdebug \
     && docker-php-ext-enable xdebug
@@ -10,10 +13,10 @@ RUN apk add --no-cache $PHPIZE_DEPS linux-headers \
 FROM php:8.2-alpine3.18
 
 RUN apk add --no-cache \
-    	bash \
-		dumb-init \
-    	git \
-    	unzip \
+    	bash=5.2.15-r5 \
+		dumb-init=1.2.5-r2 \
+    	git=2.40.1-r0 \
+    	unzip=6.0-r14 \
     && rm -fr /var/cache/apt/*
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
