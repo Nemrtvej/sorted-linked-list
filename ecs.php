@@ -13,6 +13,8 @@ return static function (ECSConfig $ecsConfig): void {
 		[
 			__FILE__,
 			__DIR__.'/src',
+			__DIR__.'/tests',
+			__DIR__.'/examples',
 		],
 	);
 

@@ -5,6 +5,7 @@ docker-compose.override.yaml
 
 vendor
 composer.lock
+.composer
 
 Makefile.local
 

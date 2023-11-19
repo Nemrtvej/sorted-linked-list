@@ -11,7 +11,7 @@ final class NodeTest extends TestCase
 {
 	public function testItReturnsValue(): void
 	{
-		$value = "42";
+		$value = '42';
 		$node = new Node($value);
 
 		self::assertEquals($value, $node->value);
