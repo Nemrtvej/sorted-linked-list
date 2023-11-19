@@ -2,23 +2,25 @@
 
 declare(strict_types=1);
 
+require_once __DIR__.'/../vendor/autoload.php';
+
 use Nemrtvej\SortedLinkedList\SortedLinkedList;
 
 /**
- * @return SortedLinkedList<int>
+ * @return SortedLinkedList<string>
  */
 function constructData(): SortedLinkedList
 {
-	$list = SortedLinkedList::int();
-	$list->add(3);
-	$list->add(2);
-	$list->add(1);
+	$list = SortedLinkedList::string();
+	$list->add('foo');
+	$list->add('bar');
+	$list->add('baz');
 
 	return $list;
 }
 
 /**
- * @param SortedLinkedList<int> $data
+ * @param SortedLinkedList<string> $data
  */
 function printData(SortedLinkedList $data): void
 {
@@ -28,4 +30,11 @@ function printData(SortedLinkedList $data): void
 }
 
 $data = constructData();
+/*
+ * Will print:
+ *
+ * bar
+ * baz
+ * foo
+ */
 printData($data);

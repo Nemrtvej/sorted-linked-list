@@ -28,6 +28,10 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	private Closure $comparator;
 
 	/**
+	 * Create sorted linked list instance prepared for handling integers in ascending order.
+	 *
+	 * If you wish to change the order direction or some other shenanigans use the setComparator method.
+	 *
 	 * @param list<int>|null $values
 	 * @return self<int>
 	 */
@@ -40,6 +44,10 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	}
 
 	/**
+	 * Create sorted linked list instance prepared for handling strings in ascending order.
+	 *
+	 * If you wish to change the order direction or some other shenanigans use the setComparator method.
+	 *
 	 * @param list<string>|null $values
 	 * @return self<string>
 	 */
@@ -52,6 +60,10 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	}
 
 	/**
+	 * This is not the entrypoint you are looking for.
+	 * @see string() Create new instance for handling strings.
+	 * @see int() Create new instance for handling integers.
+	 *
 	 * @param list<T> $values
 	 * @param Closure(T, T): int $comparator
 	 */
