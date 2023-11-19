@@ -16,7 +16,7 @@ final class FirstTest extends TestCase
 		self::assertNull($list->getFirst());
 	}
 
-	public function testItReturnsSmallesValue(): void
+	public function testItReturnsSmallestValue(): void
 	{
 		$list = SortedLinkedList::int();
 		$list->add(2);

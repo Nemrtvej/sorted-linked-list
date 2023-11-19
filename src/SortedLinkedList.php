@@ -172,6 +172,20 @@ final class SortedLinkedList implements IteratorAggregate, Countable
 	}
 
 	/**
+	 * @param T $value
+	 */
+	public function contains(mixed $value): bool
+	{
+		foreach ($this->toValues() as $currentValue) {
+			if (($this->comparator)($currentValue, $value) === 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * @return Generator<T>
 	 */
 	private function toValues(): Generator
