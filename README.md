@@ -37,7 +37,7 @@ See contents of [examples](./examples/) directory for some example usage.
 
 This library was developed with docker in mind. The attached docker image contains also an xdebug.
 For basic development:
-1. Make sure your environment contains variables PUID and PGDUI with the ID of your user and group respectively.
+1. Make sure your environment contains variables PUID and PGID with the ID of your user and group respectively.
    - This can be done for example by adding this code into your .bashrc (or other shell rc file)
        ```shell
 			export PUID=$(id -u)
